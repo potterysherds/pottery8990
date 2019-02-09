@@ -29,12 +29,50 @@ def upload_folder(folder_name, client):
     #directory = os.fsencode(folder_name)
     for file in os.listdir(folder_name):
         #filename = os.fsdecode(file)
-        if file.endswith('.py'):
+        if file.endswith('.txt'):
         #if filename.endswith('.txt'):
             cwd = os.getcwd()
             item = client.item(drive='me', id='root').children[file].upload(cwd + '/' + folder_name + '/' +file)
         continue
+
+#create to_folder if to_folder doen
+def upload_to_folder(from_folder, to_folder, client):
+    folder = get_onedrive_folder(to_folder, client)
+    if folder == 0:
+        folder = create_folder(to_folder, client)
+    for file in os.listdir(from_folder):
+        if file.endswith('.txt'):
+            cwd = os.getcwd()
+            item = client.item(drive='me', id=folder.id).children[file].upload(cwd + '/' + from_folder + '/' +file)
+        continue
+
+def create_folder(new_name, client):
+    f = onedrivesdk.Folder()
+    i = onedrivesdk.Item()
+    i.name = new_name
+    i.folder = f
+    fold = client.item(drive='me', id='root').children.add(i)
+    return fold
+
+def get_onedrive_folder(onedrive_folder, client):
+    coll = client.item(drive='me',id='root').children.request().get()
+    index = 0
+    for item in coll:
+        if coll[index].name == onedrive_folder:
+            return coll[index]
+        index = index + 1
+    return 0
+
+#show ALL contents of the onedrive 
+def dump_onedrive(client):
+    coll = client.item(drive='me',id='root').children.request().get()
+    index = 0
+    for item in coll:
+        print(coll[index].name)
+        index = index + 1
+    return coll
     
 c = authenticate()
 #upload_file('onedrive_test_folder/yeetus1.txt', c)
-upload_folder('onedrive_test_folder', c)
+#upload_folder('onedrive_test_folder', c)
+upload_to_folder('tif photos','tif upload test 2 Feb 2019',c)
