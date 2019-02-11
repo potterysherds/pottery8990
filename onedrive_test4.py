@@ -42,9 +42,9 @@ def upload_to_folder(from_folder, to_folder, client):
     if folder == 0:
         folder = create_folder(to_folder, client)
     for file in os.listdir(from_folder):
-        if file.endswith('.txt'):
-            cwd = os.getcwd()
-            item = client.item(drive='me', id=folder.id).children[file].upload(cwd + '/' + from_folder + '/' +file)
+        #if file.endswith('.txt'):
+        cwd = os.getcwd()
+        item = client.item(drive='me', id=folder.id).children[file].upload(cwd + '/' + from_folder + '/' +file)
         continue
 
 #create a root level folder, or given the id of parent folder, create a folder in a folder
@@ -101,3 +101,4 @@ c = authenticate()
 #g2 = get_onedrive_folder('porkchop express', c, parent=g.id)
 #g3 = get_onedrive_folder('valkyrie', c, parent=g2.id)
 #returned_item = upload_file('yeetus.txt', c, parent=g3.id)
+upload_folder('onedrive_test_folder', c)

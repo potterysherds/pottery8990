@@ -38,6 +38,7 @@ def capture_and_download(argv):
                   ' --debug --debug-logfile=' + argv[2] +\
                   ' --filename ' + argv[1])
     print('File "'+argv[1]+'" is saved') # subprocess won't print this in terminal anyway...
+    #os.system('gphoto2 -L -f store_00020001/DCIM/100CANON --port usb:'+argv[0])
 
 if __name__ == "__main__":
     capture(sys.argv[1:])

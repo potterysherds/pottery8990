@@ -75,4 +75,4 @@ def dump_onedrive(client):
 c = authenticate()
 #upload_file('onedrive_test_folder/yeetus1.txt', c)
 #upload_folder('onedrive_test_folder', c)
-upload_to_folder('tif photos','tif upload test 2 Feb 2019',c)
+upload_to_folder('onedrive_test_folder','jpeg upload test 10 Feb',c)

@@ -54,7 +54,7 @@ CAMERA_MODEL = "Canon EOS 1300D"
 CAMERA_MODEL_NO_SPACE = "Canon\ EOS\ 1300D"
 
 # More constants for scanning
-NUM_OF_PICS_PER_SHERD = 10.0 # Modify this for the number of pictures you want to take in a full cycle. The motor will stop this amount of times during the cycle to take pictures. Remember to add ".0" to make sure calculation will be precise. 
+NUM_OF_PICS_PER_SHERD = 5.0 # Modify this for the number of pictures you want to take in a full cycle. The motor will stop this amount of times during the cycle to take pictures. Remember to add ".0" to make sure calculation will be precise. 
 DELAY = 0.002 # Unit: seconds. The time that the controller code waits before heading to the next step. Should be necessary to control the motor, but should be relatively short.
 FULL_STEPPER_CYCLE_STEPS = 200 #??? Usually stepper motors use 200 steps for a full cycle, but this one seems to have its own idea and requires 400 steps.
 GEAR_RATIO = 4 # Multiply this number to the number of steps to get the real number of steps our small motor needs to turn in order to make the big table spin one full cycle
@@ -135,7 +135,9 @@ def captureImages(dir = '', name = ''):
                 print("Trimming logfile for camera %d", i)
                 trim_file(dir_and_name+str(i+1)+".txt", KEEP_OLD_LOG_FILE)'''
         for i in range(num_of_ports):
-            procs[i].wait()
+            out,err = procs[i].communicate()
+            print("Process %d says:" % i)
+            print(out)
         
 # No need to auto-focus because we want to fix the parameters, since the sherd position is fixed
 def one_sherd_photo_cycle():
@@ -187,7 +189,7 @@ def one_sherd_photo_cycle():
     for j in range(num_of_ports):
         #d_procs[j].wait()
         out,err = d_procs[j].communicate() # ??? the right way ???
-        #print(out)
+        print(out)
     print("Sherd %d finished" % SHERD_ID)
 
 killGphoto2Process()

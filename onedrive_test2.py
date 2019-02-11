@@ -29,10 +29,9 @@ def upload_folder(folder_name, client):
     #directory = os.fsencode(folder_name)
     for file in os.listdir(folder_name):
         #filename = os.fsdecode(file)
-        if file.endswith('.py'):
         #if filename.endswith('.txt'):
-            cwd = os.getcwd()
-            item = client.item(drive='me', id='root').children[file].upload(cwd + '/' + folder_name + '/' +file)
+        cwd = os.getcwd()
+        item = client.item(drive='me', id='root').children[file].upload(cwd + '/' + folder_name + '/' +file)
         continue
     
 c = authenticate()
