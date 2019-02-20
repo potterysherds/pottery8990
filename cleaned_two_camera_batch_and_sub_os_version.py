@@ -59,7 +59,7 @@ FULL_STEPPER_CYCLE_STEPS = 200 # Stepper motors use 200 steps for a full cycle.
 GEAR_RATIO = 4 # Multiply this number to FULL_STEPPER_CYCLE_STEPS to get the real number of steps our small motor needs to turn in order to make the big table spin one full cycle. See line below.
 FULL_CYCLE_STEPS = FULL_STEPPER_CYCLE_STEPS * GEAR_RATIO
 AVG_STEPS_PER_SHOT = FULL_CYCLE_STEPS / NUM_OF_PICS_PER_SHERD
-SLEEP_TIME_BETWEEN_SHOTS = 0.2 # Unit: seconds. Planned to wait this long for oscillation to vanish before taking the next turn, but it seems the delay that cameras need to capture rendered this useless.
+SLEEP_TIME_BETWEEN_SHOTS = 1 # Unit: seconds. Planned to wait this long for oscillation to vanish before taking the next turn, but it seems the delay that cameras need to capture rendered this useless.
 
 # Read in some file that records previous state
 STATE_FILE = open(HOME_PI+'Scripts/vars/parameters.json', 'r+')
@@ -202,6 +202,7 @@ def one_sherd_photo_cycle():
     # Each iteration of this loop runs a step of the stepper motor.
     for i in range(FULL_CYCLE_STEPS):
         # If we have taken enough steps since the previous capture, then stop and take a picture.
+        resetCaptureTarget() # not sure if adding this here helps anything
         if (i >= next_angle_steps):
             # Wait a little while for vibration stabilization
             sleep(SLEEP_TIME_BETWEEN_SHOTS)
@@ -211,6 +212,7 @@ def one_sherd_photo_cycle():
             file_name = shot_time+"_angle"+str(angle_index)+"_camera"
             #resetCaptureTarget() # Just to make sure it doesn't randomly switch to RAM again # Actually I'm moving this to the capture method directly
             captureImages(save_location, file_name)
+            resetCaptureTarget() # not sure if adding this here will also help
             #print("Image on sherd #%d finished -- from the main loop" % angle_index)
 
             # Increment next angle step

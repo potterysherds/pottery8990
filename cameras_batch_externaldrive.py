@@ -242,6 +242,9 @@ num_of_ports = len(ports)
 print("Removing all previous files from cameras...")
 clearCameraFiles()
 while True:
+    print("I'm sleeping, unplug whatever you want")
+    sleep(10)
+    print("I'm done sleeping, you better be ready")
     one_sherd_photo_cycle()
     cont = raw_input("You want to halt before photos are removed? (y/n)")
     if cont == 'n':
